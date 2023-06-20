@@ -1,0 +1,51 @@
+---
+title: 'Captivating Insights: Statistics of Meetup Members as of June 3, 2023'
+output: html_document
+author: "Mouna Belaid, Lead of R-Ladies Paris"
+date: "2023-06-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+```{r}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggrepel)
+library(stringr)
+library(lubridate)
+library(plotly)
+```
+
+## Introduction
+
+Welcome to this informative R Markdown document, where we present a comprehensive overview of our members' statistics. Within these pages, you will find a wealth of insightful data and analytics that shed light on the diverse characteristics and trends among our esteemed community.
+
+```{r data}
+rladies_paris <- read_excel("~/Desktop/Mouna/R-Ladies Paris/Statistics from Meetup_June 2023/rladies_paris_Member_List_on_2023_06_03.xlsx") # data can't be made public as it includes personal information.
+```
+
+## Evolution of the number of our members on our [Meetup](https://www.meetup.com/fr-FR/rladies-paris/) group
+
+You can also embed plots, for example:
+
+```{r plot}
+rladies_paris$Joined_Group_on <- mdy(rladies_paris$Joined_Group_on) # convert character to date format.
+rladies_paris_year <- rladies_paris %>% mutate(year = year(rladies_paris$Joined_Group_on)) %>% group_by(year) %>% count()
+
+rladies_paris_year %>%
+  ungroup() %>% plot_ly(type = 'scatter', 
+                        mode = 'lines + markers') %>% 
+  add_trace(x = ~year, y = ~cumsum(n),
+            marker = list(color = '#fdc538', size = 12),
+            line = list(color = '#2568b0'),
+            hoverinfo = "text",
+            text = ~paste(n, "New members\n", cumsum(n), 'Total number of members on', year)) %>% 
+  layout(xaxis = list(title = list(text='Year', font=list(size=18))), 
+         yaxis = list(title = list(text='Total Number', font=list(size=18))), 
+         title = "Evolution of the Number of Members on Meetup",
+         showlegend = FALSE) 
+```
