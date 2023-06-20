@@ -22,7 +22,7 @@ library(plotly)
 
 ## Introduction
 
-Welcome to this informative R Markdown document, where we present a comprehensive overview of our members' statistics. Within these pages, you will find a wealth of insightful data and analytics that shed light on the diverse characteristics and trends among our esteemed community.
+Welcome to this informative R Markdown document, where we present a comprehensive overview of our members' statistics. You will find a wealth of insightful data and analytics that shed light on the diverse characteristics and trends among our esteemed community.
 
 ```{r data}
 rladies_paris <- read_excel("~/Desktop/Mouna/R-Ladies Paris/Statistics from Meetup_June 2023/rladies_paris_Member_List_on_2023_06_03.xlsx") # data can't be made public as it includes personal information.
